@@ -52,6 +52,9 @@ class Excedea_client_connection_plugin_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+
+		require_once (plugin_dir_path( __FILE__ )) . 'Excedea_client_connetion_plugin_Settings.php';
+		new Excedea_client_connetion_plugin_Settings();
 	}
 
 	/**

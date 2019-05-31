@@ -52,6 +52,17 @@ register_activation_hook( __FILE__, 'activate_excedea_client_connection_plugin' 
 register_deactivation_hook( __FILE__, 'deactivate_excedea_client_connection_plugin' );
 
 /**
+ * Add plugin settings link
+ */
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'add_excedea_page_settings_link');
+function add_excedea_page_settings_link( $links ) {
+    $links[] = '<a href="' .
+        admin_url( 'options-general.php?page=excedea_settings' ) .
+        '">' . __('Settings', 'excedea_client_connection_plugin') . '</a>';
+    return $links;
+}
+
+/**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
