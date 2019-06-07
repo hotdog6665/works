@@ -51,14 +51,16 @@ function deactivate_excedea_client_connection_plugin() {
 register_activation_hook( __FILE__, 'activate_excedea_client_connection_plugin' );
 register_deactivation_hook( __FILE__, 'deactivate_excedea_client_connection_plugin' );
 
+
+
 /**
  * Add plugin settings link
  */
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'add_excedea_page_settings_link');
 function add_excedea_page_settings_link( $links ) {
-    $links[] = '<a href="' .
+    array_unshift($links, '<a href="' .
         admin_url( 'options-general.php?page=excedea_settings' ) .
-        '">' . __('Settings', 'excedea_client_connection_plugin') . '</a>';
+        '">' . __('Settings', 'excedea_client_connection_plugin') . '</a>');
     return $links;
 }
 
@@ -67,6 +69,10 @@ function add_excedea_page_settings_link( $links ) {
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-excedea_client_connection_plugin.php';
+
+if (!Excedea_client_connection_plugin::check_connection()) {
+    add_action('admin_notices', array('Excedea_client_connection_plugin', 'not_connected_notice'));
+}
 
 /**
  * Begins execution of the plugin.
