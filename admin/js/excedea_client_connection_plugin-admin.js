@@ -1,5 +1,5 @@
-jQuery(document).ready(function($){
-    $( "#connection_checker" ).submit(function( event ) {
+jQuery(document).ready(function ($) {
+    $("#connection_checker").submit(function (event) {
         event.preventDefault();
         var main_site_url = $(this).find('.main_site_url').val();
         var token = $(this).find('.token').val();
