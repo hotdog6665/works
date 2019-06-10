@@ -35,7 +35,7 @@ class Excedea_client_connection_plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Excedea_client_connection_plugin_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Excedea_client_connection_plugin_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -44,7 +44,7 @@ class Excedea_client_connection_plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -53,7 +53,7 @@ class Excedea_client_connection_plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -213,6 +213,38 @@ class Excedea_client_connection_plugin {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Check connection to the main site
+	 *
+	 * @return bool
+	 */
+	public static function check_connection() {
+		$val           = get_option( 'excedea_options' );
+		$main_site_url = isset( $val['main_site_url'] ) ? $val['main_site_url'] : null;
+		$site_url      = get_site_url();
+		$token         = isset( $val['token'] ) ? $val['token'] : null;
+		$rest_url      = $main_site_url . '/wp-json/excedea/domains/?token=' . $token;
+		$result        = wp_remote_get( $rest_url );
+		$body          = wp_remote_retrieve_body( $result );
+		$responce_url  = str_replace( '"', '', nl2br( stripslashes( $body ) ) );
+		if ( $responce_url == $site_url ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Show notice about connection to the main site if not connected
+	 */
+	public static function not_connected_notice() {
+		?>
+        <div id="message" class="error not_connected_notice">
+            <p><?php printf( __( 'Please make a connection to the main site %shere%s', 'excedea_client_connection_plugin' ), '<a href="' . admin_url( 'options-general.php?page=excedea_settings' ) . '">', '</a>' ); ?></p>
+        </div>
+		<?php
 	}
 
 }

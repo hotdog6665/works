@@ -43,5 +43,4 @@ class Excedea_client_connection_plugin_i18n {
 	}
 
 
-
 }

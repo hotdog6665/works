@@ -1,0 +1,19 @@
+#connection_checker .invalid_url, #connection_checker .not_connected {
+    margin-left: 10px;
+    font-size: 14px;
+    color: red;
+}
+
+#connection_checker .invalid {
+    border: 1px solid red;
+}
+
+#connection_checker .token, #connection_checker .main_site_url {
+    width: 50%;
+}
+
+#connection_checker .connected {
+    margin-left: 10px;
+    font-size: 14px;
+    color: green;
+}
